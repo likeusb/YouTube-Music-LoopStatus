@@ -1,10 +1,5 @@
 //All credit for the icons goes to icons8. https://icons8.com/
-
 var loopButton = (document.getElementsByClassName("repeat")[0]);
-
-var carousel = document.getElementsByClassName("ytmusic-carousel");
-var history = document.getElementsByClassName("ytmusic-shelf-renderer");
-var results = document.getElementsByClassName("ytmusic-card-shelf-renderer");
 
 function setCookie(value) {
     const d = new Date();
@@ -22,16 +17,21 @@ function getCookie(name) {
 
 loopButton.addEventListener('click', function() {
     if (testRegex() == 'NONE') {
-        setCookie('NONE')
+        setTimeout(() => {
+            setCookie('NONE')
+        }, 100);
     } else if (testRegex() == 'ALL') {
-        setCookie('ALL')
+        setTimeout(() => {
+            setCookie('ALL')
+        }, 100);
     } else if (testRegex() == 'ONE') {
-        setCookie('ONE')
+        setTimeout(() => {
+            setCookie('ONE')
+        }, 100);
     };
 });
 
 function testRegex() {
-    // const regex = new RegExp(/repeat=NONE|repeat=ALL|repeat=ONE/g);
     const regexNONE = new RegExp(/repeat=NONE/g);
     const regexALL = new RegExp(/repeat=ALL/g);
     const regexONE = new RegExp(/repeat=ONE/g);
@@ -65,40 +65,18 @@ function titleRename(){
     };
 };
 
-let test = regexTest();
-
-function regexTest() {
+function rememberLoopStatus() {
     while (customCookieTest() !== titleRename()) {
         if (customCookieTest() == titleRename()) {
-            console.log('Complete');
-            return 'Complete';
+            break;
         };
         loopButton.click();
-        console.log('Clicked');
-    }
-    console.log(titleRename(), customCookieTest());
-    return 'giodfhgkldf;s';
+    };
 };
 
-function regexBasedClick() {
-    regexTest();
-    console.log(test);
-};
-
-Array.from(carousel).forEach((element) => {
-    element.addEventListener('click', function() {
-        regexBasedClick();
-    });
-});
-
-Array.from(history).forEach((element) => {
-    element.addEventListener('click', function() {
-        regexBasedClick();
-    });
-});
-
-Array.from(results).forEach((element) => {
-    element.addEventListener('click', function() {
-        regexBasedClick();
-    });
+window.addEventListener('click', function() {
+    const regExp = new RegExp(/music.youtube.com\/watch/g);
+    if (regExp.test(window.location.href) == true) {
+        rememberLoopStatus();
+    };
 });
